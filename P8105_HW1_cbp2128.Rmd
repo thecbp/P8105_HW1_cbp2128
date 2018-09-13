@@ -5,6 +5,40 @@ date: "9/13/2018"
 output: github_document
 ---
 
+# Preliminary imports and preparation
+```{r lib_imports }
+library(tidyverse)
+
+set.seed(1)
+```
+
+# Problem 1
+
+Problem 1 reviews data types in R and type coercion. We'd like to create a data frame with columns containing one of the various types in R. Thanks to vectorization, we can base most of the other columns on the uniformly distributed numbers.
+
+```{r p1_df }
+# Extract df length for change later
+desired_col_length = 10
+
+various_types_df = tibble(
+  uniform_nums = runif(desired_col_length, min = 0, max = 5),
+  is_gt_2 = uniform_nums > 2,
+  characters = character(desired_col_length),
+  factors = factor(is_gt_2, labels = c("NOT GT2", "GT2"))
+)
+```
+
+Type coercion is the conversion of one type to another. In cases where you attempt to do some operation, say taking the average, on a data type that is incompatible with that operation, R will try to switch the types and salvage the situation for you.
+
+Here, I would expect `mean()` to work on the uniform sample and the boolean values. Usually, programming languages will interpret `TRUE` as 1 and `FALSE` as 0, so taking the average here will make sense.
+
+Conversely, it will not work for the character vector or the factor vector because it doesn't make sense to average out a string or category.
+
+```{r p1_mean_attempts }
+df_means = apply(various_types_df, 2, mean)
+df_means
+```
+
 ### Reminders for coding in R
 * meaningful variable / object names
 * readable code (one command per line; adequate whitespace and indentation; etc)
