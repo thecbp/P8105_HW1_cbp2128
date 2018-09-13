@@ -12,7 +12,7 @@ library(knitr)
 set.seed(1)
 ```
 
-We need to plot in this homework, so we need `ggplot` from `tidyverse`. We are also generating random numbers, so we'll set a random seed.
+We need to plot in this homework, so we need `ggplot` from `tidyverse`. For our tables, we'll use `kable()` from `knitr`. We are also generating random numbers, so we'll set a random seed.
 
 # Problem 1
 
@@ -45,7 +45,7 @@ Within our data, I would expect `mean()` to work on the uniform sample and the B
 
 Conversely, `mean()` will not work for the character vector or the factor vector they are not numerical in nature. 
 
-```{r p1_mean_attempts, warning = FALSE }
+```{r p1_means_df, warning = FALSE }
 means_df = tibble(
   # Expected to work
   uniform_mean = mean(various_types_df$uniform_nums),
@@ -57,7 +57,7 @@ means_df = tibble(
 )
 ```
 results in:
-```{r p1_mean_attempts_df, echo = FALSE }
+```{r p1_mean_attempts_display, echo = FALSE }
 kable(means_df)
 ```
 
@@ -92,7 +92,7 @@ exp_coercion_df2 = tibble(
 
 results in:
 
-```{r p1_explicit_coercion_2_df, echo = FALSE}
+```{r p1_explicit_coercion_2_display, echo = FALSE}
 kable(exp_coercion_df2)
 ```
 
