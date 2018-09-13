@@ -80,6 +80,22 @@ exp_coercion_df2
 ```
 
 Factor coercion allow us to connect characters to numbers. However, we cannot go from factor to character to number since the character to number conversion still doesn't make any sense to R. 
+# Problem 2
+
+```{r p2_df }
+sample_size = 1000
+
+data = tibble(
+  x = rnorm(sample_size, mean = 0, sd = 1),
+  y = rnorm(sample_size, mean = 0, sd = 1),
+  is_gt0 = (x + y) > 0,
+  is_gt0_as_num = as.numeric(is_gt0),
+  is_gt_factor = as.factor(is_gt0_as_num)
+)
+```
+
+The size of the dataset is `r sample_size`, the mean is `r mean(data$x)`, the median is `r median(data$x)`, and the proportion of `TRUE` in the logical vector is `r sum(data$is_gt0 == TRUE)/sample_size`.
+
 
 ### Reminders for coding in R
 * meaningful variable / object names
