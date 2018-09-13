@@ -1,0 +1,6 @@
+---
+title: "Homework 1 Code"
+author: "Christian Pascual"
+date: "9/13/2018"
+output: github_document
+---
