@@ -30,7 +30,7 @@ various_types_df = tibble(
 
 Type coercion is the conversion of one type to another. In cases where you attempt to do some operation, say taking the average, on a data type that is incompatible with that operation, R will try to switch the types and salvage the situation for you.
 
-Here, I would expect `mean()` to work on the uniform sample and the boolean values. Usually, programming languages will interpret `TRUE` as 1 and `FALSE` as 0, so taking the average here will make sense.
+Here, I would expect `mean()` to work on the uniform sample and the boolean values because it expects numerical values. Usually, programming languages will interpret `TRUE` as 1 and `FALSE` as 0, so taking the average here will make sense.
 
 Conversely, it will not work for the character vector or the factor vector because it doesn't make sense to average out a string or category.
 
@@ -44,7 +44,42 @@ means_df = tibble(
   char_mean = mean(various_types_df$characters),
   factor_mean = mean(various_types_df$factors)
 )
+
+means_df
 ```
+
+`means_df` confirms our suspicions.  `mean()` returns a meaningful result from the uniform numbers and the logical vector, but returns a null value for the characters and factors. 
+
+R did the type coercion implicitly, but it's better to be more explicit in your code. We will use the `as.numeric()` to try to tell R directly to do the coercion.
+
+```{r p1_explicit_coercion_1 }
+exp_coercion_df1 = tibble(
+  coerced_logical = as.numeric(various_types_df$is_gt_2),
+  coerced_character = as.numeric(various_types_df$characters),
+  coerced_factor = as.numeric(various_types_df$factors)
+)
+
+exp_coercion_df1
+```
+
+Explicit conversion allows us to convert the factor data into numbers where implicit coercion couldn't do this. This conversion makes sense if we think about the "numbering" to the factors. The factors are countable, so we can ascribe numbers to them.
+
+R's vectorization capabilities allow us to just plug in coercion methods into each other. Thus, we can coerce even the character vector into a set of numbers. This will allow us to even turn the character vector into numbers.
+
+```{r p1_explicit_coercion_2 }
+exp_coercion_df2 = tibble(
+  coerced_char2fac2num = as.numeric(
+    as.factor(various_types_df$characters)
+    ),
+  coerced_fac2char2fac = as.numeric(
+    as.character(various_types_df$factors)
+    )
+)
+
+exp_coercion_df2
+```
+
+Factor coercion allow us to connect characters to numbers. However, we cannot go from factor to character to number since the character to number conversion still doesn't make any sense to R. 
 
 ### Reminders for coding in R
 * meaningful variable / object names
