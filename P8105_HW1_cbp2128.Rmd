@@ -134,10 +134,6 @@ logical_plot = ggplot(data = data) +
 logical_plot
 ```
 
-```{r save_p2_plot_1, include = FALSE }
-ggsave("P2_plot_1.png", plot = logical_plot)
-```
-
 The logical vector produces only two colors because there are only two options. Sometimes, it may be useful to actually see the gradient of what our values `x + y` look like, using color.
 
 ```{r p2_plot_2 }
@@ -161,3 +157,7 @@ ggplot(data = data) +
 ```
 
 All of the color scales can end up looking the same since we're only looking at binary values (TRUE/FALSE, 0/1 for logical, 1/2 for factor). If we look at the gradient of values produced by `x + y`, then you'll see that the gradient forms along the diagonal due to the normal distribution of both `x` and `y`. 
+
+```{r save_p2_plot_1, include = FALSE }
+ggsave("P2_plot_1.png", plot = logical_plot)
+```
