@@ -98,6 +98,8 @@ data
 
 The size of the dataset is `r sample_size`, the mean is `r mean(data$x)`, the median is `r median(data$x)`, and the proportion of `TRUE` in the logical vector is `r sum(data$is_gt0 == TRUE)/sample_size`.
 
+## Data Visualizations
+
 ```{r p2_plot_1 }
 ggplot(data = data) +
   geom_point(mapping = aes(x = x, y = y), 
@@ -120,6 +122,8 @@ ggplot(data = data) +
              col = ifelse(data$is_gt0_factor == 1, "blue", "red")
              )
 ```
+
+All of the color scales can end up looking the same since we're only looking at binary values (TRUE/FALSE, 0/1 for logical, 1/2 for factor). If we look at the gradient of values produced by `x + y`, then you'll see that the gradient forms along the diagonal due to the normal distribution of both `x` and `y`.
 
 ### Reminders for coding in R
 * meaningful variable / object names
