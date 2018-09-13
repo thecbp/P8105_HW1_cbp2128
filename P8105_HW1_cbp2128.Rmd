@@ -35,8 +35,15 @@ Here, I would expect `mean()` to work on the uniform sample and the boolean valu
 Conversely, it will not work for the character vector or the factor vector because it doesn't make sense to average out a string or category.
 
 ```{r p1_mean_attempts }
-df_means = apply(various_types_df, 2, mean)
-df_means
+means_df = tibble(
+  # Expected to work
+  uniform_mean = mean(various_types_df$uniform_nums),
+  logicals_mean = mean(various_types_df$is_gt_2),
+  
+  # Not expected to work
+  char_mean = mean(various_types_df$characters),
+  factor_mean = mean(various_types_df$factors)
+)
 ```
 
 ### Reminders for coding in R
