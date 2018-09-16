@@ -21,7 +21,6 @@ Problem 1 reviews R's data types and type coercion. We'd like to create a data f
 ```{r p1_df }
 # Extract df length for change later
 desired_col_length = 10
-sentence = "Pretty sure that this sentence is 10 words long"
 
 various_types_df = tibble(
   uniform_nums = runif(desired_col_length, min = 0, max = 5),
