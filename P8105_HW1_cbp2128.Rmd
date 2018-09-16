@@ -121,43 +121,36 @@ The dataframe is too large to display, but we can summarize it. The size of the 
 
 ## Data Visualizations
 
-Using `ggplot`, we can plot out the relationship between `x` and `y`. We'd like to differentiate between points where the `x + y` is greater than 0, so we can distinguish between them using a conditional statement. The result is a rough approximation of the Pepsi logo.
+Using `ggplot`, we can plot out the relationship between `x` and `y`. We'd like to differentiate between points where `x + y > 0`, so we can distinguish between them by specifying `is_gt0` in the `col` keyword argument in `aes()`. The result is a rough, pastel approximation of the Pepsi logo.
 
 ```{r p2_plot_1 }
 logical_plot = ggplot(data = data) +
-  geom_point(mapping = aes(x = x, y = y), 
-             col = ifelse(data$is_gt0, "blue", "red")
-             )
+  geom_point(mapping = aes(x = x, y = y, col = is_gt0))
 ```
 
 ```{r p2_plot_1_display, echo = FALSE }
 logical_plot
 ```
 
-The logical vector produces only two colors because there are only two options. Sometimes, it may be useful to actually see the gradient of what our values `x + y` look like, using color.
+The logical vector produces only two colors because there are only two options. We can use other columns to specify the coloring. Below, we use the numeric conversion of the boolean vector `is_gt0_as_num` to specify the coloring scheme. We get different colors, but the legend specifies different points.
 
 ```{r p2_plot_2 }
-# Creates a function to generate proper rgb values between two given colors
-gradient = colorRampPalette(c('red', 'blue'))
-
-# gradient produces 10 colors, and we divide x + y into 10 bins to fit
 ggplot(data = data) +
-  geom_point(mapping = aes(x = x, y = y), 
-             col = gradient(10)[as.numeric(cut(data$x + data$y, breaks = 10))]
-             )
+  geom_point(mapping = aes(x = x, y = y, col = is_gt0_as_num))
 ```
 
-Lastly, we can plot out the coloring by the factors. There are only 2 factors, so the resulting plot will look like the first one.
+Since numbers are used to color, R also assumes that there might be some gradient, which shows up in the legend. We only have two values, but any value in between 0 and 1 would have shown up as a blend of blue and black. 
+
+Finally, we can plot out the coloring by the factors. There are only 2 factors, so the resulting plot will look like the first two plots.
 
 ```{r p2_plot_3 }
 ggplot(data = data) +
-  geom_point(mapping = aes(x = x, y = y), 
-             col = ifelse(data$is_gt0_factor == 1, "blue", "red")
-             )
+  geom_point(mapping = aes(x = x, y = y, col = is_gt0_factor))
 ```
 
-All of the color scales can end up looking the same since we're only looking at binary values (TRUE/FALSE, 0/1 for logical, 1/2 for factor). If we look at the gradient of values produced by `x + y`, then you'll see that the gradient forms along the diagonal due to the normal distribution of both `x` and `y`. 
+All of the color scales can end up looking the same since we're only looking at binary sets of values (TRUE/FALSE, 0/1 for logical, 1/2 for factor). The resulting plots only have two colors, but the numeric scale gives the possibility of a gradient.
 
 ```{r save_p2_plot_1, include = FALSE }
+# Save the logical plot for HW1
 ggsave("P2_plot_1.png", plot = logical_plot)
 ```
